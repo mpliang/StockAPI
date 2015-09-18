@@ -1,0 +1,14 @@
+<div class="jumbotron text-center">
+    <h1>Stocks</h1>
+
+    <p>{{ message }}</p>
+    <ul class="list-unstyled">
+     <li ng-repeat="n in stocklist track by $index">
+       <!-- {{n.Name}}/{{n.Symbol}}: LastPrice: {{n.LastPrice}}.  Change: {{n.Change}} -->
+        {{n}}
+       <a href="#">
+         <span class="fa fa-trash-o"></span>
+       </a>
+     </li>
+   </ul>
+</div>
