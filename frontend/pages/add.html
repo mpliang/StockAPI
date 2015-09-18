@@ -10,7 +10,7 @@
       <li ng-repeat="n in results">
         {{n.name}} -/- {{n.symb}}
         <a href="#">
-          <span class="glyphicon glyphicon-ok"></span>
+          <span class="glyphicon glyphicon-ok" ng-click="getData(n.symb)"></span>
         </a>
 
       </li>

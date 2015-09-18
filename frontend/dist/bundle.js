@@ -78,6 +78,11 @@
 	    });
 	    return stocks;
 	  };
+	
+	  this.getData = function (symbol) {
+	    console.log('add stock clicked');
+	    console.log(symbol);
+	  };
 	});
 	
 	app.constant('apiURL', 'http://localhost:8000');
@@ -186,11 +191,11 @@
 	    url: '/',
 	    templateUrl: '/pages/home.html',
 	    controller: 'mainController'
-	  }).state('about', {
+	  }).state('add', {
 	    url: '/add',
 	    templateUrl: '/pages/add.html',
 	    controller: 'addController'
-	  }).state('users', {
+	  }).state('stocks', {
 	    url: '/stocks',
 	    templateUrl: '/pages/stocks.html',
 	    controller: 'stocksController'

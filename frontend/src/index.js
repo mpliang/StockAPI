@@ -30,6 +30,15 @@ app.service('stockSearch', function($http){
       });
       return stocks;
     };
+
+
+    this.getData = function(symbol) {
+      console.log('add stock clicked');
+      console.log(symbol);
+
+    }
+
+    
   });
 
   app.constant('apiURL', 'http://localhost:8000')
