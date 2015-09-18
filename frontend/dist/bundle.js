@@ -45,77 +45,21 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// http://dev.markitondemand.com/Api/v2/Quote/json?symbol=AAPL
 	// http://dev.markitondemand.com/Api/v2/Lookup/json?input=apple
-	
 	'use strict';
 	
-	var app = angular.module('stockApp', ['ngRoute']);
+	__webpack_require__(/*! ./module */ 5);
 	
-	// configure our routes
-	app.config(function ($routeProvider) {
-	  $routeProvider.when('/', {
-	    templateUrl: 'pages/home.html',
-	    controller: 'mainController'
-	  }).when('/add', {
-	    templateUrl: 'pages/add.html',
-	    controller: 'addController'
-	  }).when('/stocks', {
-	    templateUrl: 'pages/stocks.html',
-	    controller: 'stocksController'
-	  });
-	});
+	__webpack_require__(/*! ./controllers/home */ 1);
 	
-	// create the controller and inject Angular's $scope
-	app.controller('mainController', function ($scope) {
-	  // create a message to display in our view
-	  $scope.message = 'Lets get started!';
-	});
+	__webpack_require__(/*! ./controllers/add */ 2);
 	
-	app.controller('addController', function ($scope, $http, stockSearch, Tracked) {
-	  $scope.message = 'Type a symbol or company name.';
+	__webpack_require__(/*! ./controllers/stocks */ 3);
 	
-	  $scope.lookup = function () {
-	    $scope.results = stockSearch.getStock($scope.stock);
-	  };
-	
-	  $scope.addStock = function () {
-	    Tracked.create($scope.name).then(function (data) {
-	      console.log(data);
-	      $scope.stocklist = data.data;
-	    })['catch'](function (error) {
-	      console.log(error);
-	    });
-	  };
-	});
-	
-	app.controller('stocksController', function ($scope, Tracked) {
-	  $scope.message = 'Here are your stocks:';
-	
-	  Tracked.read().then(function (data) {
-	    console.log(data);
-	    $scope.stocklist = data.data;
-	  })['catch'](function (error) {
-	    console.log(error);
-	  });
-	
-	  $scope.remove = function () {
-	    if (typeof $scope.name !== 'undefined') {
-	      for (var i = 0; i < symbolList.length; i++) {
-	        if (symbolList[i] === $scope.name) {
-	          console.log('before', symbolList);
-	          hasRemove = 1;
-	          symbolList.splice(i, 1);
-	          $scope.list = symbolList;
-	          console.log('after', symbolList);
-	          break;
-	        };
-	      }
-	    }
-	  };
-	});
+	__webpack_require__(/*! ./config */ 4);
 	
 	//////////////////////////////////////////////////
 	app.service('stockSearch', function ($http) {
@@ -152,6 +96,117 @@
 	
 	  return Tracked;
 	});
+
+/***/ },
+/* 1 */
+/*!*********************************!*\
+  !*** ./src/controllers/home.js ***!
+  \*********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	app.controller('mainController', function ($scope) {
+	  $scope.message = 'Lets get started!';
+	});
+
+/***/ },
+/* 2 */
+/*!********************************!*\
+  !*** ./src/controllers/add.js ***!
+  \********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	app.controller('addController', function ($scope, $http, stockSearch, Tracked) {
+	  $scope.message = 'Type a symbol or company name.';
+	
+	  $scope.lookup = function () {
+	    $scope.results = stockSearch.getStock($scope.stock);
+	  };
+	
+	  $scope.addStock = function () {
+	    Tracked.create($scope.name).then(function (data) {
+	      console.log(data);
+	      $scope.stocklist = data.data;
+	    })['catch'](function (error) {
+	      console.log(error);
+	    });
+	  };
+	});
+
+/***/ },
+/* 3 */
+/*!***********************************!*\
+  !*** ./src/controllers/stocks.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	app.controller('stocksController', function ($scope, Tracked) {
+	  $scope.message = 'Here are your stocks:';
+	
+	  Tracked.read().then(function (data) {
+	    console.log(data);
+	    $scope.stocklist = data.data;
+	  })['catch'](function (error) {
+	    console.log(error);
+	  });
+	
+	  $scope.remove = function () {
+	    if (typeof $scope.name !== 'undefined') {
+	      for (var i = 0; i < symbolList.length; i++) {
+	        if (symbolList[i] === $scope.name) {
+	          console.log('before', symbolList);
+	          hasRemove = 1;
+	          symbolList.splice(i, 1);
+	          $scope.list = symbolList;
+	          console.log('after', symbolList);
+	          break;
+	        };
+	      }
+	    }
+	  };
+	});
+
+/***/ },
+/* 4 */
+/*!***********************!*\
+  !*** ./src/config.js ***!
+  \***********************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	app.config(function ($stateProvider, $urlRouterProvider) {
+	  $urlRouterProvider.otherwise('/');
+	  $stateProvider.state('home', {
+	    url: '/',
+	    templateUrl: '/pages/home.html',
+	    controller: 'mainController'
+	  }).state('about', {
+	    url: '/add',
+	    templateUrl: '/pages/add.html',
+	    controller: 'addController'
+	  }).state('users', {
+	    url: '/stocks',
+	    templateUrl: '/pages/stocks.html',
+	    controller: 'stocksController'
+	  });
+	});
+
+/***/ },
+/* 5 */
+/*!***********************!*\
+  !*** ./src/module.js ***!
+  \***********************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	window.app = angular.module('stockApp', ['ui.router']);
 
 /***/ }
 /******/ ]);
