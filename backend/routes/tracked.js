@@ -6,14 +6,16 @@ var fs = require('fs');
 router.get('/', function(req, res, next) {
   fs.readFile('stocks.json', function(error, dataBuffer){
     var data = JSON.parse(dataBuffer);
-    res.send(data.tracked);
+    res.send(data);
   });
 });
 
 router.post('/', function (req, res, next) {
   fs.readFile('stocks.json', function(error, dataBuffer){
     var data = JSON.parse(dataBuffer);
-    data.tracked.push(req.body.newSymbol);
+    console.log('body', req.body);
+    // data.tracked.push(req.body);
+    data[req.body.name] = req.body;
     console.log(data);
     fs.writeFile('stocks.json', JSON.stringify(data), function(error, dataBuffer){
       // data.req.body
